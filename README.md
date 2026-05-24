@@ -1,59 +1,22 @@
-# jacdaegi
+# 1_mpu_pid (Project: jacdaegi)
 
-STM32 기반 MPU6050 자세 제어 시스템 (PID Balance Controller)
+## 개요
+이 프로젝트는 STM32 Nucleo/F446RE를 기반으로 MPU6050 센서를 활용한 **실시간 PID 모터 제어 시스템**입니다.
 
-본 프로젝트는 STM32 마이크로컨트롤러를 이용하여 MPU6050 IMU 센서 데이터를 처리하고,
-PID 제어 알고리즘을 통해 DC 모터의 자세 안정화를 수행하는 임베디드 제어 시스템입니다.
+## 주요 기능
+- **센서 데이터 처리**: MPU6050 가속도/자이로 센서 데이터 읽기.
+- **상보 필터(Complementary Filter)**: 센서 노이즈를 제거하여 정확한 Roll 각도 계산.
+- **PID 제어 루프**: 실시간 각도 오차에 대응하여 모터 출력을 정밀하게 제어.
+- **I2C 비상 복구**: 통신 에러 발생 시 버스를 강제 리셋하여 시스템 중단 방지.
 
----
+## 기술 스택
+- **IDE**: STM32CubeIDE
+- **MCU**: STM32F4xx 시리즈
+- **통신**: I2C (센서), UART (디버깅)
 
-## Project Overview
+## 프로젝트 구조
+- `Core/`: 소스 코드 및 인터럽트 핸들러
+- `*.ioc`: STM32CubeMX 하드웨어 설정 파일
 
-이 시스템은 Roll 각도를 기준으로 균형을 유지하는 제어 시스템이며,
-실시간 센서 데이터 처리 + 제어 루프 + 모터 출력 + 통신 복구 기능을 포함합니다.
-
-핵심 목표:
-- IMU 기반 실시간 자세 추정
-- PID 제어를 통한 안정화
-- I2C 통신 장애 대응
-- 실시간 디버깅 및 상태 모니터링
-
----
-
-## System Architecture
-
-### Sensor Layer
-- MPU6050 (Accelerometer + Gyroscope)
-- I2C 통신 기반 데이터 수집
-
-### Processing Layer
-- Complementary Filter 적용
-- Roll Angle 계산
-
-### Control Layer
-- PID Controller (P / I / D)
-- 목표 각도 기반 오차 계산
-
-### Actuation Layer
-- DC Motor PWM 제어
-- 방향 + 속도 제어
-
----
-
-## Control Algorithm
-
-```c
-error = target_angle - safe_angle;
-
-Target
-목표 각도: -20°
-
-pid_output = (Kp * error)
-           - (Kd * (gyro[0] / 131.0f));Kp = 45.0f;
-
-Kp = 45.0f;
-Ki = 5.0f;
-Kd = 5.0f;
-propeller_adj = 2.0f;Ki = 5.0f;
-Kd = 5.0f;
-propeller_adj = 2.0f;
+## 작성자
+- Eddy Lee
