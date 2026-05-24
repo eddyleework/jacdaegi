@@ -16,7 +16,7 @@ int16_t acc[3], gyro[3];
 IMU_Angle_t my_angle = { 0 };
 MotorControl myMotor = { 1, 0 };
 
-float Kp = 45.0f, Ki = 5.0f, Kd = 5.0f, propeller_adj = 2.0f;
+float Kp = 35.0f, Ki = 5.0f, Kd = 5.0f, propeller_adj = 2.0f;
 float error = 0.0f, integral = 0.0f, pid_output = 0.0f;
 const float dt = 0.01f;
 bool debug = true;
